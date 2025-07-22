@@ -1,23 +1,22 @@
-package com.greendam.codesandbox;
+package com.greendam.codesandbox.controller;
 
 import com.greendam.codesandbox.model.ExecuteCodeRequest;
 import com.greendam.codesandbox.model.ExecuteCodeResponse;
 import com.greendam.codesandbox.service.impl.JavaNativeCodeSandBox;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest
-class SimpleCodeSandboxApplicationTests {
-
-    @Test
-    void contextLoads() {
+@RestController
+public class TestController {
+    @GetMapping("/helloworld")
+    public ExecuteCodeResponse helloWorld() {
         JavaNativeCodeSandBox javaNativeCodeSandBox = new JavaNativeCodeSandBox();
         String code = "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
-                "        System.out.println(\"Hello, NewWorld!\")\n" +
+                "        System.out.println(\"Hello, NewWorld!\");\n" +
                 "        System.out.println(1/0);\n" +
                 "    }\n" +
                 "}";
@@ -31,6 +30,6 @@ class SimpleCodeSandboxApplicationTests {
         ExecuteCodeResponse response = javaNativeCodeSandBox.executeCode(java);
         System.out.println(response.toString());
         System.out.println("ok");
+        return response;
     }
-
 }
