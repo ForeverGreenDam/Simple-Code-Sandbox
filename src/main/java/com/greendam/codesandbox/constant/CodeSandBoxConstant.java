@@ -28,7 +28,7 @@ public interface CodeSandBoxConstant {
     /**
      * Java执行命令
      */
-    String JAVA_COMMAND = "java -Dfile.encoding=UTF-8 -cp %s Main %s";
+    String JAVA_COMMAND = "java -Xmx256m -Dfile.encoding=UTF-8 -cp %s Main %s";
     /**
      * Java执行操作
      */

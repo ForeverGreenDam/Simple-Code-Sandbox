@@ -2,18 +2,21 @@ package com.greendam.codesandbox.service.impl;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.dfa.WordTree;
 import com.greendam.codesandbox.common.utils.ProcessUtils;
 import com.greendam.codesandbox.constant.CodeSandBoxConstant;
 import com.greendam.codesandbox.model.ExecuteCodeRequest;
 import com.greendam.codesandbox.model.ExecuteCodeResponse;
 import com.greendam.codesandbox.model.ExecuteMessage;
 import com.greendam.codesandbox.model.JudgeInfo;
+import com.greendam.codesandbox.model.enums.JudgeMessageEnum;
 import com.greendam.codesandbox.model.enums.JudgeStatusEnum;
 import com.greendam.codesandbox.service.CodeSandBox;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,10 +27,14 @@ import java.util.List;
 public class JavaNativeCodeSandBox implements CodeSandBox {
     private static final String ROOT_PATH;
     private static final String TEMP_CODE_PATH;
-    //初始化工作路径以及临时代码路径
+    private static final List<String> BLACK_LIST = Arrays.asList("Files","try","catch","Process","Tread","Runtime","exec");
+    private static final WordTree WORD_TREE ;
+    //初始化工作路径以及临时代码路径，初始化黑名单字典树
     static{
         ROOT_PATH = System.getProperty(CodeSandBoxConstant.USER_DIR);
         TEMP_CODE_PATH = ROOT_PATH + File.separator + CodeSandBoxConstant.TEMP_CODE;
+        WORD_TREE = new WordTree();
+        WORD_TREE.addWords(BLACK_LIST);
         if(!FileUtil.exist(TEMP_CODE_PATH)){
             FileUtil.mkdir(TEMP_CODE_PATH);
         }
@@ -38,6 +45,13 @@ public class JavaNativeCodeSandBox implements CodeSandBox {
         List<String> inputList = request.getInputList();
         String language = request.getLanguage();
         ExecuteCodeResponse response = new ExecuteCodeResponse();
+        //首先判断用户的代码是否含有敏感信息
+        if(WORD_TREE.isMatch(code)){
+            return ExecuteCodeResponse.builder()
+                    .message(JudgeMessageEnum.DANGEROUS_OPERATION.getValue())
+                    .status(JudgeStatusEnum.FAILED.getValue())
+                    .build();
+        }
 
         //1. 将用户的代码保存为文件
         String fileDir = TEMP_CODE_PATH + File.separator + UUID.randomUUID();
