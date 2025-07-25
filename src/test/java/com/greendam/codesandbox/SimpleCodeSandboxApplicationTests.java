@@ -2,6 +2,7 @@ package com.greendam.codesandbox;
 
 import com.greendam.codesandbox.model.ExecuteCodeRequest;
 import com.greendam.codesandbox.model.ExecuteCodeResponse;
+import com.greendam.codesandbox.service.impl.JavaDockerCodeSandBox;
 import com.greendam.codesandbox.service.impl.JavaNativeCodeSandBox;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,20 +19,23 @@ class SimpleCodeSandboxApplicationTests {
     @Test
     void timeOut() {
         JavaNativeCodeSandBox javaNativeCodeSandBox = new JavaNativeCodeSandBox();
+        JavaDockerCodeSandBox javaDockerCodeSandBox=new JavaDockerCodeSandBox();
         String code = "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
-                "        System.out.println(\"Hello, NewWorld!\");\n" +
-                "       while(true){}\n" +
+                "        //System.out.println(\"Hello, NewWorld!\");\n" +
+                "      int i=1+1;\n" +
+                "System.out.println(i);\n" +
                 "    }\n" +
                 "}";
         List<String> inputList = new ArrayList<>();
         inputList.add("test");
+        inputList.add("test2");
         ExecuteCodeRequest java = ExecuteCodeRequest.builder()
                 .code(code)
                 .inputList(inputList)
                 .language("Java")
                 .build();
-        ExecuteCodeResponse response = javaNativeCodeSandBox.executeCode(java);
+        ExecuteCodeResponse response = javaDockerCodeSandBox.executeCode(java);
         System.out.println(response.toString());
         System.out.println("ok");
     }
@@ -42,6 +46,7 @@ class SimpleCodeSandboxApplicationTests {
     @Test
     void OOM() {
         JavaNativeCodeSandBox javaNativeCodeSandBox = new JavaNativeCodeSandBox();
+        JavaDockerCodeSandBox javaDockerCodeSandBox=new JavaDockerCodeSandBox();
         String code = " import java.util.ArrayList;\n" +
                 "import java.util.List;\n" +
                 " public class Main {\n" +
@@ -58,7 +63,7 @@ class SimpleCodeSandboxApplicationTests {
                 .inputList(inputList)
                 .language("Java")
                 .build();
-        ExecuteCodeResponse response = javaNativeCodeSandBox.executeCode(java);
+        ExecuteCodeResponse response = javaDockerCodeSandBox.executeCode(java);
         System.out.println(response.toString());
         System.out.println("ok");
     }
@@ -68,6 +73,7 @@ class SimpleCodeSandboxApplicationTests {
     @Test
     void readError() {
         JavaNativeCodeSandBox javaNativeCodeSandBox = new JavaNativeCodeSandBox();
+        JavaDockerCodeSandBox javaDockerCodeSandBox=new JavaDockerCodeSandBox();
         String code = " import java.io.File;\n" +
                 "import java.io.IOException;\n" +
                 "import java.nio.file.Files;\n" +
@@ -87,7 +93,7 @@ class SimpleCodeSandboxApplicationTests {
                 .inputList(inputList)
                 .language("Java")
                 .build();
-        ExecuteCodeResponse response = javaNativeCodeSandBox.executeCode(java);
+        ExecuteCodeResponse response = javaDockerCodeSandBox.executeCode(java);
         System.out.println(response.toString());
         System.out.println("ok");
     }

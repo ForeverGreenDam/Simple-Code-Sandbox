@@ -34,6 +34,10 @@ public interface CodeSandBoxConstant {
      */
     String JAVA = "执行";
     /**
+     * java8运行环境的docker镜像
+     */
+    String JAVA_IMAGE="openjdk:8-alpine";
+    /**
      * 失败状态码
      */
     Integer FAIL = 3;
