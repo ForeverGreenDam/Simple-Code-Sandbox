@@ -13,7 +13,6 @@ import com.greendam.codesandbox.model.TemplateDTO;
 import com.greendam.codesandbox.model.enums.JudgeStatusEnum;
 import com.greendam.codesandbox.service.CodeSandBox;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

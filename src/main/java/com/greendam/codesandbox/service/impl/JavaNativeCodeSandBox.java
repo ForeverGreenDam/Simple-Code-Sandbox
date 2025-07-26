@@ -7,6 +7,7 @@ import com.greendam.codesandbox.constant.CodeSandBoxConstant;
 import com.greendam.codesandbox.model.*;
 import com.greendam.codesandbox.model.enums.JudgeMessageEnum;
 import com.greendam.codesandbox.model.enums.JudgeStatusEnum;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.List;
  *
  * @author ForeverGreenDam
  */
+@Component
 public class JavaNativeCodeSandBox extends JavaCodeSandboxTemplate {
 
     private static final List<String> BLACK_LIST = Arrays.asList("Files","try","catch","Process","Tread","Runtime","exec");
@@ -31,7 +33,6 @@ public class JavaNativeCodeSandBox extends JavaCodeSandboxTemplate {
         WORD_TREE = new WordTree();
         WORD_TREE.addWords(BLACK_LIST);
     }
-
     @Override
     public TemplateDTO runFile (String fileDir, List<String> inputList) {
         List<ExecuteMessage> executeMessageList = new ArrayList<>();

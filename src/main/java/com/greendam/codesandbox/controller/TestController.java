@@ -17,7 +17,6 @@ public class TestController {
         String code = "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        System.out.println(\"Hello, NewWorld!\");\n" +
-                "        System.out.println(1/0);\n" +
                 "    }\n" +
                 "}";
         List<String> inputList = new ArrayList<>();

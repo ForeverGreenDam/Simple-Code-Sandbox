@@ -14,11 +14,9 @@ import com.github.dockerjava.core.command.ExecStartResultCallback;
 import com.greendam.codesandbox.constant.CodeSandBoxConstant;
 import com.greendam.codesandbox.model.*;
 import com.greendam.codesandbox.model.enums.JudgeStatusEnum;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
-import javax.annotation.Resource;
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author ForeverGreenDam
  */
+@Component
 public class JavaDockerCodeSandBox extends JavaCodeSandboxTemplate {
     public static final DockerClient dockerClient= DockerClientBuilder.getInstance().build();
     @Override
@@ -178,7 +177,9 @@ public class JavaDockerCodeSandBox extends JavaCodeSandboxTemplate {
         for (ExecuteMessage executeMessage : executeMessageList) {
             if(executeMessage.getExitValue()==0){
                 if (!StrUtil.isBlank(executeMessage.getMessage())){
-                    outputList.add(executeMessage.getMessage());
+                    //docker代码沙箱会额外拼接一个换行符在结尾，需要手动处理
+                    String[] messageArray = executeMessage.getMessage().split("\n");
+                    outputList.add(messageArray[0]);
                 }
                 //获取时间占用
                 judgeInfo.setTime(Math.toIntExact(maxTime > executeMessage.getTime() ? maxTime : executeMessage.getTime()));

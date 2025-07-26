@@ -34,7 +34,8 @@ class SimpleCodeSandboxApplicationTests {
                 .inputList(inputList)
                 .language("Java")
                 .build();
-        ExecuteCodeResponse response = javaDockerCodeSandBox.executeCode(java);
+       // ExecuteCodeResponse response = javaDockerCodeSandBox.executeCode(java);
+        ExecuteCodeResponse response = javaNativeCodeSandBox.executeCode(java);
         System.out.println(response.toString());
         System.out.println("ok");
     }
