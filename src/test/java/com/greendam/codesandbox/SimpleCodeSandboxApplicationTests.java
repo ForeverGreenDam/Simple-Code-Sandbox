@@ -12,12 +12,11 @@ import java.util.List;
 
 @SpringBootTest
 class SimpleCodeSandboxApplicationTests {
-
     /**
-     * 测试超时漏洞
+     * 正常测试
      */
     @Test
-    void timeOut() {
+    void run() {
         JavaNativeCodeSandBox javaNativeCodeSandBox = new JavaNativeCodeSandBox();
         JavaDockerCodeSandBox javaDockerCodeSandBox=new JavaDockerCodeSandBox();
         String code = "public class Main {\n" +
@@ -36,6 +35,32 @@ class SimpleCodeSandboxApplicationTests {
                 .language("Java")
                 .build();
         ExecuteCodeResponse response = javaDockerCodeSandBox.executeCode(java);
+        System.out.println(response.toString());
+        System.out.println("ok");
+    }
+
+    /**
+     * 测试超时漏洞
+     */
+    @Test
+    void timeOut() {
+        JavaNativeCodeSandBox javaNativeCodeSandBox = new JavaNativeCodeSandBox();
+        JavaDockerCodeSandBox javaDockerCodeSandBox=new JavaDockerCodeSandBox();
+        String code = "public class Main {\n" +
+                "    public static void main(String[] args) {\n" +
+                "        System.out.println(\"Hello, NewWorld!\");\n" +
+                "      while(true){}\n" +
+                "    }\n" +
+                "}";
+        List<String> inputList = new ArrayList<>();
+        inputList.add("test");
+        inputList.add("test2");
+        ExecuteCodeRequest java = ExecuteCodeRequest.builder()
+                .code(code)
+                .inputList(inputList)
+                .language("Java")
+                .build();
+        ExecuteCodeResponse response = javaNativeCodeSandBox.executeCode(java);
         System.out.println(response.toString());
         System.out.println("ok");
     }
@@ -63,7 +88,7 @@ class SimpleCodeSandboxApplicationTests {
                 .inputList(inputList)
                 .language("Java")
                 .build();
-        ExecuteCodeResponse response = javaDockerCodeSandBox.executeCode(java);
+        ExecuteCodeResponse response = javaNativeCodeSandBox.executeCode(java);
         System.out.println(response.toString());
         System.out.println("ok");
     }
@@ -93,7 +118,7 @@ class SimpleCodeSandboxApplicationTests {
                 .inputList(inputList)
                 .language("Java")
                 .build();
-        ExecuteCodeResponse response = javaDockerCodeSandBox.executeCode(java);
+        ExecuteCodeResponse response = javaNativeCodeSandBox.executeCode(java);
         System.out.println(response.toString());
         System.out.println("ok");
     }
