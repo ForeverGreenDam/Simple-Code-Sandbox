@@ -15,7 +15,7 @@ public class CodeController {
     @Resource
     private JavaDockerCodeSandBox javaDockerCodeSandBox;
     @PostMapping("/runcode")
-    public ExecuteCodeResponse helloWorld(@RequestBody ExecuteCodeRequest executeCodeRequest) {
+    public ExecuteCodeResponse runCode(@RequestBody ExecuteCodeRequest executeCodeRequest) {
         return javaDockerCodeSandBox.executeCode(executeCodeRequest);
     }
 }

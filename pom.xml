@@ -84,7 +84,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.greendam.codesandbox.SimpleCodeSandboxApplication</mainClass>
-                    <skip>true</skip>
+                    <skip>false</skip>
                 </configuration>
                 <executions>
                     <execution>
