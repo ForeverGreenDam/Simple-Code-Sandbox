@@ -1,7 +1,7 @@
 # Simple-Code-Sandbox
 一个简单的代码沙箱实现，目前暂时支持java，后续语言支持更新中。。。
 ## 使用方式
-使用Post请求传入JSON数据，数据格式如下
+使用Post请求[forevergreendam.cn/runcode](http://forevergreendam.cn/runcode)传入JSON数据，数据格式如下
 ```json
 {
   "inputList": ["1","2"],
